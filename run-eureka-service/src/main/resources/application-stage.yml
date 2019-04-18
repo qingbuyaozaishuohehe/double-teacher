@@ -1,0 +1,11 @@
+eureka:
+  instance:
+    hostname: ${spring.cloud.client.ipAddress}
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.3.36:8761/eureka/
+    fetch-registry: true
+    register-with-eureka: true
+  server:
+    enable-self-preservation: false
+    eviction-interval-timer-in-ms: 60000

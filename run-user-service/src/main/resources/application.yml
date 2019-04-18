@@ -1,0 +1,72 @@
+server:
+  port: 18088
+  tomcat:
+    max-connections: 1000
+    max-threads: 500
+  connection-timeout: 60000
+
+hystrix:
+  command:
+    default:
+      coreSize: 100
+      maximumSize: 1000
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: -1
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+spring:
+  application:
+    name: run-user
+  profiles:
+    active: dev
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
+#mybatis-plus
+mybatis-plus:
+  mapper-locations: classpath:/mapper/*Mapper.xml
+  typeAliasesPackage: com.rzlearn.user.entity
+  global-config:
+    id-type: 0
+    field-strategy: 2
+    db-column-underline: true
+    refresh-mapper: true
+    #capital-mode: true
+    logic-delete-value: 1
+    logic-not-delete-value: 0
+  configuration:
+    map-underscore-to-camel-case: true
+    cache-enabled: false
+
+customer:
+  qq:
+    app-id: 101238520
+    app-key: 5a458eb676eeeeca58c131a45d537c36
+    redirect-url: /callback/qq
+    scope: get_user_info
+    user-info-url: https://graph.qq.com/user/get_user_info
+    access-token-url: https://graph.qq.com/oauth2.0/token
+    get-open-id-url: https://graph.qq.com/oauth2.0/me
+    authorize-url: https://graph.qq.com/oauth2.0/authorize
+  weibo:
+    app-id: 1492074982
+    app-key: f0e1e77ff3d9b7b0a448f8a2e3578722
+    redirect-url: /callback/sina
+    scope: all
+    user-info-url: https://api.weibo.com/2/users/show.json
+    access-token-url: https://api.weibo.com/oauth2/access_token
+    authorize-url: https://api.weibo.com/oauth2/authorize
+  weixin:
+    app-id: wx7f62699d9446c4c5
+    app-key: fa1d47e3d15724937ebf7da136e3e943
+    redirect-url: /callback/wx
+    scope: snsapi_login
+    user-info-url: https://api.weixin.qq.com/sns/userinfo
+    access-token-url: https://api.weixin.qq.com/sns/oauth2/access_token
+    authorize-url: https://open.weixin.qq.com/connect/qrconnect

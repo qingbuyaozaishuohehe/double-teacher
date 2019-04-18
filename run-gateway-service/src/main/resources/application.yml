@@ -1,0 +1,58 @@
+server:
+  port: 18083
+  tomcat:
+    max-connections: 1000
+    max-threads: 500
+  connection-timeout: 60000
+zuul:
+  routes:
+    run-common: /run-cmm/**
+    run-user: /run-user/**
+    run-setting: /run-setting/**
+  host:
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 60000
+    max-per-route-connections: 100
+    max-total-connections: 1000
+  semaphore:
+    max-semaphores: 1000
+  ignored-services: '*'
+
+hystrix:
+  command:
+    default:
+      coreSize: 100
+      maximumSize: 1000
+      allowMaximumSizeToDivergeFromCoreSize: true
+      maxQueueSize: -1
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  ReadTimeout: 60000
+  SocketTimeout: 60000
+
+spring:
+  application:
+    name: run-gateway
+  profiles:
+    active: dev
+
+customer:
+  cors:
+    allowedOrigins: "*"
+    allowedMethods: GET,POST,DELETE,PUT,OPTIONS
+    allowedHeaders: Origin,X-Requested-With,Content-Type,Accept,Accept-Encoding,Accept-Language,Host,Referer,Connection,User-Agent,Authorization
+
+springfox:
+  documentation:
+    swagger:
+      v2:
+        path: /api-docs
+
+security:
+  oauth2:
+    resource:
+      filter-order: 3

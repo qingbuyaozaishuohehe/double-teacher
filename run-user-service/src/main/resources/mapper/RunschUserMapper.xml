@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzlearn.user.mapper.RunschUserMapper">
+
+    <select id="pageUser" resultType="com.rzlearn.user.dto.GetPageUserDTO">
+        select A.id,A.domain_id,A.organization_Id,A.name,A.user_name,A.phone,A.email,A.gmt_create,A.state, GROUP_CONCAT(A.role_code)
+        as role_codes from (
+        select A.*,B.role_code from runsch_user A,runsch_user_role B
+        where B.user_id = A.id and B.role_code in
+        <foreach collection="roleCodes" open="(" close=")" item="roleCode" separator=",">
+            #{roleCode}
+        </foreach>
+        <if test="domainId != null and domainId != ''">
+            and A.domain_id = #{domainId}
+        </if>
+        <if test="userName != null and userName != ''">
+            and A.user_name = #{userName}
+        </if>
+        <if test="phoneNum != null and phoneNum != ''">
+            and A.phone = #{phoneNum}
+        </if>
+        <if test="disused == null or disused== ''">
+            and A.state = '1'
+        </if>
+        <if test="disused != null and disused != '' and disused == false">
+            and A.state = '1'
+        </if>
+        <if test="name != null and name != ''">
+            and A.name like CONCAT('%',#{name},'%')
+        </if>
+        )A GROUP BY A.id,A.organization_Id,A.name,A.user_name,A.phone,A.email,A.gmt_create,A.state
+        <if test="sortField != null and sortField != ''">
+            order by
+            <if test="sortField == 'id'">
+                A.id
+            </if>
+            <if test="sortField == 'name'">
+                A.name
+            </if>
+            <if test="sortField == 'gmtCreate'">
+                A.gmt_create
+            </if>
+            <if test="sortField == 'user_name'">
+                A.user_name
+            </if>
+            <if test="orderBy == 'desc'">
+                desc
+            </if>
+        </if>
+    </select>
+    <select id="listUserByRoleAndDomain" resultType="com.rzlearn.user.dto.GetUserDTO">
+        SELECT
+            A.id,A.user_name,A.domain_id
+        FROM
+            runsch_user A,
+            runsch_user_role B
+        WHERE
+            A.id = B.user_id
+        AND
+            A.domain_id = #{domainId}
+        AND
+            B.role_code in
+            <foreach collection="roleCodes" open="(" close=")" item="roleCode" separator=",">
+                #{roleCode}
+            </foreach>
+    </select>
+</mapper>

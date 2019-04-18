@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.rzlearn.user.mapper.RunschPermissionMapper">
+
+    <select id="listRolePermission" resultType="com.rzlearn.user.dto.RolePermissionsDTO">
+        SELECT
+			b.id, b.permission_name, b.menu_name, b.parent_id
+		FROM
+			runsch_role_permission a
+		LEFT JOIN runsch_permission b ON b.permission_name = a.permission_name
+		WHERE
+			a.role_code = #{roleCode}
+		AND b.`language` = #{language}
+		ORDER BY
+			a.id
+    </select>
+
+</mapper>

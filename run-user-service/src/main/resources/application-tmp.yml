@@ -1,0 +1,36 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-uf6r0w1u7pb2p71aa.mysql.rds.aliyuncs.com:3306/run_school_user?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: bj123!@#
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+  redis:
+    database: 0
+    host: r-uf640df4b9fb93f4.redis.rds.aliyuncs.com
+    port: 6379
+    password: ruihu@run-321
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.11.11:8761/eureka/
+  instance:
+    prefer-ip-address: true

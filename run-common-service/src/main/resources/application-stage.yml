@@ -1,0 +1,38 @@
+spring:
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    url: jdbc:mysql://rm-uf6wq526ob1540x40.mysql.rds.aliyuncs.com:3306/run_school_common?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: rzlearn123!@#
+    type: com.alibaba.druid.pool.DruidDataSource
+    initialSize: 5
+    minIdle: 5
+    maxActive: 20
+    maxWait: 60000
+    timeBetweenEvictionRunsMillis: 60000
+    minEvictableIdleTimeMillis: 300000
+    validationQuery: SELECT 1 FROM DUAL
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    filters: stat,wall,log4j
+    logSlowSql: true
+  redis:
+    database: 0
+    host: r-uf6dc37c474d59a4.redis.rds.aliyuncs.com
+    port: 6379
+    password: RUN1q2w3e4r
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://192.168.3.36:8761/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 30
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html

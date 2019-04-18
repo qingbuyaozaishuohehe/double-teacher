@@ -1,0 +1,32 @@
+eureka:
+  client:
+    serviceUrl:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 30
+    prefer-ip-address: true
+    instance-id: ${spring.cloud.client.ipAddress}:${server.port}/swagger-ui.html
+
+customer:
+  security:
+    authentication:
+      oauth:
+        client: run-client
+        secret: run-secret-token-in-prod
+        token-validity-in-seconds: 86400
+        refresh-token-validity-in-seconds: 2592000
+
+spring:
+  redis:
+    database: 0
+    host: 106.14.6.115
+    port: 6379
+    password: 123456
+    pool:
+      max-idle: 8
+      min-idle: 0
+      max-active: 8
+      max-wait: -1
+  resources:
+    add-mappings: true
